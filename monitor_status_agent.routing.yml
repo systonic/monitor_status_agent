@@ -1,0 +1,7 @@
+monitor_status_agent.config:
+  path: '/admin/config/services/monitor_status_agent'
+  defaults:
+    _title: 'Monitor status agent'
+    _form: '\Drupal\monitor_status_agent\Form\MonitorStatusAgentAdminForm'
+  requirements:
+    _custom_access: '\Drupal\monitor_status_agent\Controller\MonitorStatusAgentController::access'

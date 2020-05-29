@@ -1,0 +1,6 @@
+name: 'Monitor status agent'
+description: '.'
+core: 8.x
+type: module
+
+configure: monitor_status_agent.config

@@ -1,0 +1,4 @@
+monitor_status_agent.settings_tab:
+  route_name: monitor_status_agent.config
+  title: 'Settings'
+  base_route: monitor_status_agent.config

@@ -6,50 +6,20 @@
  */
 
 /**
- * Implements hook_menu().
- */
-function monitor_status_agent_menu() {
-  $items['admin/config/services/monitor_status_agent'] = array(
-    'title' => 'Monitor status agent',
-    'description' => '',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('monitor_status_agent_settings'),
-    'access callback' => 'monitor_status_agent_user_1',
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'monitor_status_agent.admin.inc',
-  );
-
-  return $items;
-}
-
-/**
- * .
- */
-function monitor_status_agent_user_1() {
-  global $user;
-
-  if ($user->uid == 1) {
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-/**
  * Implements hook_xmlrpc().
  */
 function monitor_status_agent_xmlrpc() {
-  return array(
-    array(
+  return [
+    [
       'monitor.status',
       'monitor_status_agent_callback',
-      array(
+      [
         'base64',
         'base64',
-      ),
+      ],
       t('Get site status'),
-    ),
-  );
+    ],
+  ];
 }
 
 /**
@@ -60,24 +30,25 @@ function monitor_status_agent_callback($crypt_key) {
     return xmlrpc_error(400, t('Invalid request.'));
   }
 
-  $priv_key = variable_get('monitor_status_agent_private_key', '');
+  $config = \Drupal::config('monitor_status_agent.settings');
+  $priv_key = $config->get('monitor_status_agent_private_key');
 
   if (openssl_private_decrypt($crypt_key, $key, $priv_key)) {
-    module_load_include('inc', 'update', 'update.report');
     $available = update_get_available(TRUE);
-    $data = update_calculate_project_data($available);
+    $data = $available;
+
     $cipher = 'AES-256-CBC';
     $ivlen = openssl_cipher_iv_length($cipher);
     $iv = openssl_random_pseudo_bytes($ivlen);
     $cipher_data = openssl_encrypt(serialize($data), $cipher, $key, OPENSSL_RAW_DATA, $iv);
     $hmac = hash_hmac('sha256', $cipher_data, $key, true);
-    $pub_key = variable_get('monitor_status_agent_dashboard_key');
+    $pub_key = $config->get('monitor_status_agent_dashboard_key');
 
     if (openssl_public_encrypt($iv, $crypt_iv, $pub_key)) {
-      return base64_encode(serialize(array($crypt_iv, $hmac, $cipher_data)));
+      return base64_encode(serialize([$crypt_iv, $hmac, $cipher_data]));
     }
   }
 
-  return array();
+  return xmlrpc_error(400, t('Invalid request.'));
 }
 

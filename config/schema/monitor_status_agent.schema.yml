@@ -1,0 +1,10 @@
+monitor_status_agent.settings:
+  type: config_object
+  label: 'Monitor status agent Settings'
+  mapping:
+    monitor_status_agent_private_key:
+      type: text
+      label: 'Private key'
+    monitor_status_agent_dashboard_key:
+      type: text
+      label: 'Dashboard key'
