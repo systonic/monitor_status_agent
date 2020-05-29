@@ -35,8 +35,7 @@ function monitor_status_agent_callback($crypt_key) {
 
   if (openssl_private_decrypt($crypt_key, $key, $priv_key)) {
     $available = update_get_available(TRUE);
-    $data = $available;
-
+    $data = update_calculate_project_data($available);
     $cipher = 'AES-256-CBC';
     $ivlen = openssl_cipher_iv_length($cipher);
     $iv = openssl_random_pseudo_bytes($ivlen);
