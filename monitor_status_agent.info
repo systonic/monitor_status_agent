@@ -1,0 +1,5 @@
+name = Monitor status agent
+description = .
+core = 7.x
+
+configure = admin/config/services/monitor_status_agent
