@@ -78,6 +78,6 @@ function monitor_status_agent_callback($crypt_key) {
     }
   }
 
-  return array();
+  return xmlrpc_error(400, t('Invalid request.'));
 }
 
