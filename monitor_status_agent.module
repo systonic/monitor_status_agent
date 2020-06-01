@@ -26,6 +26,7 @@ function monitor_status_agent_xmlrpc() {
  * .
  */
 function monitor_status_agent_callback($crypt_key) {
+  module_load_include('inc', 'xmlrpc');
   if (empty($crypt_key)) {
     return xmlrpc_error(400, t('Invalid request.'));
   }
