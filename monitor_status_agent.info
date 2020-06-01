@@ -1,5 +1,6 @@
 name = Monitor status agent
-description = .
+description = Get Drupal status over secure request.
+package = Statistics
 core = 7.x
 
 configure = admin/config/services/monitor_status_agent
