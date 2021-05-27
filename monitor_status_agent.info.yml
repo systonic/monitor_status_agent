@@ -1,9 +1,8 @@
 name: 'Monitor status agent'
 description: 'Get Drupal status over secure request.'
-package: Statistics
-
 type: module
-core: 8.x
+package: Statistics
+core_version_requirement: ^8 || ^9
 
 dependencies:
   - xmlrpc:xmlrpc
