@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "drupal/core": "^8.8 || ^9",
-        "drupal/xmlrpc": "^1.0@beta"
+        "drupal/core": "^8.8 || ^9 || ^10",
+        "drupal/xmlrpc": "^1.0@RC"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
